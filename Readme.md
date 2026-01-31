@@ -1,49 +1,124 @@
-# 02backend — Node/Express/Mongo API
+# 🚀 02backend — Node.js / Express / MongoDB REST API
 
-A feature-rich backend built with Node.js, Express.js, and MongoDB using Mongoose. It implements authentication (JWT access/refresh tokens), file uploads via Multer to Cloudinary, robust error handling, and modular routing for users, videos, and channels.
+A production-ready backend API built with **Node.js, Express.js, and MongoDB**, following clean architecture and industry best practices.  
+This project implements **JWT-based authentication (access & refresh tokens)**, **secure cookies**, **Cloudinary file uploads**, and **modular routing** for users, videos, and channels.
 
-## Features
-- User registration, login, logout, profile fetch and updates
-- JWT-based authentication with access and refresh tokens
-- Secure cookies and CORS configuration
-- Cloudinary image uploads for avatar, cover, and profile pictures
-- Video metadata endpoints (title, description, tags, likes, views, dislikes)
-- Channel endpoints (name, description, subscribers)
-- Centralized error handling and consistent API responses
+The backend is designed for a **video-based platform** (YouTube-style architecture) and is scalable, secure, and interview-ready.
 
-## Tech Stack
-- Node.js, Express.js
-- MongoDB, Mongoose
-- JWT (jsonwebtoken), bcryptjs
-- Multer for uploads, Cloudinary for storage
-- CORS, cookie-parser
+---
 
-## Project Structure
-```
+## ✨ Features
+
+### 🔐 Authentication & Security
+- User registration and login
+- JWT access & refresh token implementation
+- Secure `httpOnly` cookies
+- Password hashing using `bcryptjs`
+- Token refresh endpoint
+- Protected routes using authentication middleware
+
+### 👤 User Management
+- Fetch user profile
+- Update email and password
+- Upload & update:
+  - Profile picture
+  - Avatar
+  - Cover image
+- Logout and token invalidation
+
+### 🎥 Video Management
+- Update video metadata:
+  - Title
+  - Description
+  - Tags
+  - Likes
+  - Views
+  - Dislikes
+- Authentication required for all video routes
+
+### 📺 Channel Management
+- Update channel name and description
+- Fetch channel subscribers
+- Ownership-based authorization
+
+### ☁️ File Uploads
+- File uploads using **Multer**
+- Temporary storage in `public/temp`
+- Upload to **Cloudinary**
+- Automatic cleanup after successful upload
+
+### 🧩 Architecture
+- Centralized error handling
+- Standard API response format
+- Async error wrapper for controllers
+- Clean separation of concerns
+
+---
+
+## 🛠 Tech Stack
+
+**Backend**
+- Node.js
+- Express.js
+
+**Database**
+- MongoDB
+- Mongoose
+
+**Authentication & Security**
+- jsonwebtoken (JWT)
+- bcryptjs
+- cookie-parser
+- CORS
+
+**File Uploads**
+- Multer
+- Cloudinary
+
+---
+
+## 📁 Project Structure
+
+```bash
 src/
-  app.js                # Express app, middlewares, routers, global error handler
-  index.js              # Server bootstrap and DB connection
-  database/
-    user.database.js    # Mongoose connection
-  middlewares/
-    auth.middlewares.js
-    channel.middleware.js
-    middlewares.js      # Multer config
-    video.middlewares.js
-  models/               # Mongoose models (user, video, channel, subscription)
-  controllers/          # Route handlers
-  routes/
-    user.routes.js
-    video.router.js
-    channel.router.js
-  utils/
-    ApiError.js
-    ApiResponse.js
-    asyncHandler.js
-    cloudinary.js
+│
+├── app.js                  # Express app & middlewares
+├── index.js                # Server entry point
+│
+├── database/
+│   └── user.database.js    # MongoDB connection
+│
+├── middlewares/
+│   ├── auth.middlewares.js
+│   ├── channel.middleware.js
+│   ├── video.middlewares.js
+│   └── middlewares.js      # Multer configuration
+│
+├── models/
+│   ├── user.model.js
+│   ├── video.model.js
+│   ├── channel.model.js
+│   └── subscription.model.js
+│
+├── controllers/
+│   ├── user.controller.js
+│   ├── video.controller.js
+│   └── channel.controller.js
+│
+├── routes/
+│   ├── user.routes.js
+│   ├── video.routes.js
+│   └── channel.routes.js
+│
+├── utils/
+│   ├── ApiError.js
+│   ├── ApiResponse.js
+│   ├── asyncHandler.js
+│   └── cloudinary.js
+│
 public/
-  temp/                 # Upload temp dir
-```
+└── temp/                   # Temporary upload folder
+`
 
 ## Getting Started
 ### Prerequisites
