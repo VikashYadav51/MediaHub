@@ -20,30 +20,11 @@ const loadVideoByUrl = asyncHandler(async (req, res, next) => {
     throw new ApiError(404, "Video not found", { videoUrl });
   }
 
+
   req.video = video;
 
   next();
 
-});
-
-
-const loadVideoById = asyncHandler(async (req, res, next) => {
-  const id = req.params?.videoId || req.body?.videoId;
-
-  if (!id) {
-    throw new ApiError(400, "videoId is required");
-  }
-
-  const video = await Video.findById(id);
-
-  if (!video) {
-    throw new ApiError(404, "Video not found", { videoId: id });
-  }
-
-  req.video = video;
- 
-  next();
-  
 });
 
 
@@ -74,7 +55,6 @@ const verifyVideoOwner = asyncHandler(async (req, res, next) => {
 
 export {
   loadVideoByUrl,
-  loadVideoById,
   verifyVideoOwner,
 }
 
