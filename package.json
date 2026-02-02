@@ -1,5 +1,5 @@
 {
-  "name": "02backend",
+  "name": "backend",
   "version": "1.0.0",
   "description": "Authentication, design Schema, Mongoose Aggregration piplines, JWT, Hashing, handles Error, design customise APIERROR, ApiResponse, AsyncHandler, middleware, database connection, App, Cloudinary, Hooks, controlles, routing, ",
   "keywords": [

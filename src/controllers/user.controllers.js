@@ -41,9 +41,11 @@ const registerUser = asyncHandler( async(req, res) =>{
         throw new ApiError(409, "User with email or username already exists", { userName, email });
     }
 
-    let profilePictureLocalPath = req.files?.profilePicture[0]?.path;
-    let coverImageLocalPath = req.files?.coverImage[0]?.path;
-    let avatarLocalPath = req.files?.avatar[0]?.path;
+    let profilePictureLocalPath = req.files?.profilePicture?.[0]?.path;
+    let coverImageLocalPath = req.files?.coverImage?.[0]?.path 
+    let avatarLocalPath = req.files?.avatar?.[0]?.path ;
+
+    // console.log(profilePictureLocalPath, coverImageLocalPath, avatarLocalPath);
 
     if(!profilePictureLocalPath){
         throw new ApiError(400, "Profile picture is required", { profilePictureLocalPath });
@@ -52,17 +54,19 @@ const registerUser = asyncHandler( async(req, res) =>{
     const profilePicture = await uploadOnCloudinary(profilePictureLocalPath);
     if(!profilePicture){
         throw new ApiError(400, "Profile picture upload failed", { profilePictureLocalPath });
-    }
+    }  
 
+    let coverImage;
     if(coverImageLocalPath){
-        const coverImage = await uploadOnCloudinary(coverImageLocalPath);
+        coverImage = await uploadOnCloudinary(coverImageLocalPath);
         if(!coverImage){
             throw new ApiError(400, "Cover image upload failed", { coverImageLocalPath });
         }
     }
 
+    let avatar;
     if(avatarLocalPath){
-        const avatar = await uploadOnCloudinary(avatarLocalPath);
+        avatar = await uploadOnCloudinary(avatarLocalPath);
         if(!avatar){
             throw new ApiError(400, "Avatar upload failed", { avatarLocalPath });
         }
@@ -74,8 +78,8 @@ const registerUser = asyncHandler( async(req, res) =>{
     password,
     fullName,
     profilePicture : profilePicture.url,
-    coverImage : coverImage?.url || "",
-    avatar : avatar.url || '',
+    coverPicture : coverImage?.url || "",
+    avatar : avatar?.url || '',
     });
 
 
@@ -229,7 +233,7 @@ const updateCoverPicture = asyncHandler( async (req, res) =>{
         throw new ApiError(404, "User not found", { coverImageLocalPath });
     }
 
-    user.coverImage = coverImage.url;
+    user.coverPicture = coverImage.url;
     await user.save({ validateBeforeSave : false });
 
     return res.status(200).json(
