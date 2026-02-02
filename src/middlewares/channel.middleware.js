@@ -2,7 +2,7 @@ import ApiError from '../utils/ApiError.js';
 
 import { Channel } from '../models/channel.models.js';
 
-import asyncHandler from '../utils/asyncHandler.js';
+import  asyncHandler  from '../utils/asyncHandler.js';
 
 const verifyChannelOwner = asyncHandler( async(req, res, next) =>{
     const channel = await Channel.findById(req.user?._id);

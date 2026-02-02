@@ -13,7 +13,7 @@ const generateAccessAndRefreshTokens = async(userId) =>{
     try{
         const user = await User.findById(userId);
         const accessToken = user.accessToken();
-        const refreshToken = user.refreshToken();
+        const refreshToken = user.refreshTokens();
 
         user.refreshToken = refreshToken;
         await user.save({ validateBeforeSave : false });
