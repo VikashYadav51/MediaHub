@@ -36,28 +36,23 @@ const createChannel = asyncHandler( async(req, res) =>{
 })
 
 const changeChannelName = asyncHandler( async(req, res) =>{
-    const { oldChannelName, newChannelName } = req.body;
+    const { newChannelName } = req.body;
 
-    if (newChannelName === "") {
-    throw new ApiError(400, "New channel name is required");
-}
-
-    const channel = await Channel.findById(req.channel?._id);
-
-    console.log(channel);
-    
-    if(!channel){
-        throw new ApiError(404, "Channel not found", { channelId : req.channelOwner?._id });
+    if (!newChannelName || !newChannelName.trim()) {
+        throw new ApiError(400, "New channel name is required");
     }
     
-    channel.name = newChannelName;
-    await channel.save({ validateBeforeSave : false });
+    const changeChannelName = await Channel.findByIdAndUpdate(
+        req.channel?._id,
+        { name : newChannelName.trim() },
+        { new : true }
+    )
 
-    if(channel.name !== newChannelName){
+    if(changeChannelName.name !== newChannelName.trim()){
         throw new ApiError(400, "Channel name not changed", { newChannelName });
     }
 
-    return res.status(200).json(new ApiResponse(200, "Channel name changed successfully", channel));
+    return res.status(200).json(new ApiResponse(200, "Channel name changed successfully", changeChannelName));
 });
 
 
@@ -66,6 +61,8 @@ const changeDescription = asyncHandler( async(req, res) =>{
     const { description } = req.body;
 
     const channel = await Channel.findById(req.channel?._id);
+
+    console.log(`channel controllers : ${ channel }`);
     
     if(!channel){
         throw new ApiError(404, "Channel not found", { channelId : req.channel?._id });

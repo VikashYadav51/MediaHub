@@ -11,8 +11,8 @@ import {
 const channelRouter = express.Router();    
 
 channelRouter.post('/', verifyJWT, createChannel);
-channelRouter.patch('/name', verifyJWT, verifyChannelOwner, changeChannelName);
-channelRouter.patch('/description', verifyJWT, verifyChannelOwner, changeDescription);
+channelRouter.patch('/name', verifyJWT, verifyChannelOwner,  changeChannelName);
+channelRouter.patch('/:channelId/description', verifyJWT, verifyChannelOwner, changeDescription);
 
 
 export default channelRouter;
