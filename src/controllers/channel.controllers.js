@@ -38,11 +38,11 @@ const createChannel = asyncHandler( async(req, res) =>{
 const changeChannelName = asyncHandler( async(req, res) =>{
     const { oldChannelName, newChannelName } = req.body;
 
-    if (!newChannelName || newChannelName.trim() === "") {
+    if (newChannelName === "") {
     throw new ApiError(400, "New channel name is required");
 }
 
-    const channel = await Channel.findById(req.channelOwner?._id);
+    const channel = await Channel.findById(req.channel?._id);
 
     console.log(channel);
     
@@ -51,7 +51,6 @@ const changeChannelName = asyncHandler( async(req, res) =>{
     }
     
     channel.name = newChannelName;
-
     await channel.save({ validateBeforeSave : false });
 
     if(channel.name !== newChannelName){
