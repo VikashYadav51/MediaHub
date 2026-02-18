@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 dotenv.config({
     path : './.env'
 })
-
+ 
 connectDB()
 .then(() =>{
     const Port = process.env.PORT || 8000;
