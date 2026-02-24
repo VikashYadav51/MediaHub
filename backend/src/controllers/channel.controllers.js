@@ -10,6 +10,10 @@ import { Channel } from '../models/channel.models.js';
 const createChannel = asyncHandler( async(req, res) =>{
     const { name, description } = req.body;
 
+    if(!name){
+        throw new ApiError(400, "Channel name is required", { name });
+    }
+
     const checkChannel = await Channel.findOne({
         $or : [
             { name }, { description}
